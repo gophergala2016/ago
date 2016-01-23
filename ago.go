@@ -10,6 +10,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path"
+	"runtime"
 )
 
 const (
@@ -17,10 +19,14 @@ const (
 	USAGE        = "USAGE: " + CMD + " <commands> [argument ...]\n"
 	NOARG_ERRMSG = USAGE + "\nFor detail, try " + CMD + " help\n"
 	HELP_MSG     = "Use the source ;)\n"
+	ANDRD        = "android"
+	ANDRD_TMPDIR = "/data/local/tmp"
 )
 
 var (
-	agol = log.New(os.Stderr, "[ago] ", 0)
+	agol        = log.New(os.Stderr, "[ago] ", 0)
+	dbgl        = log.New(os.Stderr, "[dbg] ", 0)
+	metadat_dir = "/tmp/.ago"
 )
 
 // ago usage is similar to familiar tools:
@@ -53,4 +59,16 @@ func main() {
 		agol.Printf("wrong commanad")
 		os.Exit(1)
 	}
+}
+
+func init() {
+	if runtime.GOOS == ANDRD {
+		metadat_dir = ANDRD_TMPDIR
+	}
+
+	if os.Getenv("HOME") != "" {
+		metadat_dir = os.Getenv("HOME")
+	}
+	metadat_dir = path.Join(metadat_dir, ".ago")
+	dbgl.Printf("metadata dir is at %s", metadat_dir)
 }
