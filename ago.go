@@ -199,7 +199,6 @@ func init() {
 		metadat_dir = os.Getenv("HOME")
 	}
 	metadat_dir = path.Join(metadat_dir, ".ago")
-	dbgl.Printf("metadata dir is at %s\n", metadat_dir)
 
 	docs_dir = path.Join(metadat_dir, DOCDIR)
 	doci_path = path.Join(docs_dir, DOCINFO)
