@@ -120,7 +120,7 @@ func init() {
 	}
 
 	for _, file := range []string{path.Join(docs_dir, DOCINFO),
-				path.Join(metadat_dir, WORDINFO)} {
+		path.Join(metadat_dir, WORDINFO)} {
 		f, err := os.Create(file)
 		if err != nil {
 			errl.Printf("docs info file creation failed: %s\n", err)
