@@ -55,6 +55,8 @@ func do_test(args []string) {
 //
 // commands are:
 // ls-docs, add-docs, rm-docs: list, add, remove documentation[s].
+// doc, mod-doc: Commands for future. Not be implemented yet. Display and
+// modify information of the doc.
 // test: start a test. Number of questions can be specified as option.
 //
 // The description above is lie because this program is nothing for now. It is
