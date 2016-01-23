@@ -76,11 +76,18 @@ func write_docs_info() {
 }
 
 func lsdocs(args []string) {
-	fmt.Printf("lsdocs\n")
+	for _, doc := range docs_info.Docs {
+		fmt.Printf("%s\n", doc.Name)
+	}
 }
 
 func adddocs(args []string) {
-	fmt.Printf("add docs %s\n", args)
+	for _, name := range args {
+		doc := document{Name: name, Id: docs_info.Nr_docs}
+		docs_info.Nr_docs += 1
+		docs_info.Docs = append(docs_info.Docs, doc)
+	}
+	write_docs_info()
 }
 
 func rmdocs(args []string) {
