@@ -8,15 +8,15 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"log"
+	"os"
 )
 
 const (
-	CMD = "ago"
-	USAGE = "USAGE: " + CMD + " <commands> [argument ...]\n"
+	CMD          = "ago"
+	USAGE        = "USAGE: " + CMD + " <commands> [argument ...]\n"
 	NOARG_ERRMSG = USAGE + "\nFor detail, try " + CMD + " help\n"
-	HELP_MSG = "Use the source ;)\n"
+	HELP_MSG     = "Use the source ;)\n"
 )
 
 var (
