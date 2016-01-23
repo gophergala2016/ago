@@ -77,7 +77,7 @@ func write_docs_info() {
 
 func lsdocs(args []string) {
 	for _, doc := range docs_info.Docs {
-		fmt.Printf("%s\n", doc.Name)
+		fmt.Printf("%d: %s\n", doc.Id, doc.Name)
 	}
 }
 
