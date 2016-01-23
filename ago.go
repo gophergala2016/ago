@@ -32,7 +32,7 @@ var (
 	errl        = log.New(os.Stderr, "[err] ", 0)
 	dbgl        = log.New(os.Stderr, "[dbg] ", 0)
 	metadat_dir = "/tmp/.ago"
-	docs_dir    = ""
+	docs_dir    string
 	doci_path   string // documents information file path
 	wordi_path  string // words information file path
 	docs_info   documents_info
