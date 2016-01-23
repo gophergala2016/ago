@@ -266,8 +266,7 @@ func init() {
 	doci_path = path.Join(docs_dir, DOCINFO)
 	wordi_path = path.Join(metadat_dir, WORDINFO)
 
-	// docs dir is already exists.
-	if _, err := os.Stat(docs_dir); err == nil {
+	if file_exists(docs_dir) {
 		read_docs_info()
 		return
 	}
