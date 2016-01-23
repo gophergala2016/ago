@@ -33,6 +33,22 @@ var (
 	docs_dir    = ""
 )
 
+func lsdocs(args []string) {
+	fmt.Printf("lsdocs\n")
+}
+
+func adddocs(args []string) {
+	fmt.Printf("add docs %s\n", args)
+}
+
+func rmdocs(args []string) {
+	fmt.Printf("rm docs %s\n", args)
+}
+
+func do_test(args []string) {
+	fmt.Printf("do test %s\n", args)
+}
+
 // main is the entry point of `ago`.
 // ago usage is similar to familiar tools:
 // 	ago <command> [argument ...]
@@ -54,13 +70,13 @@ func main() {
 	args = args[2:]
 	switch cmd {
 	case "ls-docs":
-		fmt.Printf("list docs\n")
+		lsdocs(args)
 	case "add-docs":
-		fmt.Printf("add doc\n")
+		adddocs(args)
 	case "rm-docs":
-		fmt.Printf("remove doc\n")
+		rmdocs(args)
 	case "test":
-		fmt.Printf("let the game begin\n")
+		do_test(args)
 	case "help":
 		fmt.Printf(HELP_MSG)
 	default:
