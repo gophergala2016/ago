@@ -21,12 +21,16 @@ const (
 	HELP_MSG     = "Use the source ;)\n"
 	ANDRD        = "android"
 	ANDRD_TMPDIR = "/data/local/tmp"
+	DOCDIR       = "docs"
+	DOCINFO      = "info"
+	WORDINFO     = "words"
 )
 
 var (
 	errl        = log.New(os.Stderr, "[err] ", 0)
 	dbgl        = log.New(os.Stderr, "[dbg] ", 0)
 	metadat_dir = "/tmp/.ago"
+	docs_dir    = ""
 )
 
 // main is the entry point of `ago`.
@@ -70,6 +74,27 @@ func main() {
 // directory is `$HOME/.ago`. If `$HOME` is not exists, `/tmp` is used as
 // default. For Android support in future, it should be `/data/local/tmp` at
 // future.
+//
+// Hierarchy of the directory is as:
+// .ago/docs/doc1
+//          /info
+//     /words
+//
+// Documents added by user resides under .ago/docs/ with its own directory. The
+// document own directories are named as doc[id] which id is an integer.
+// Metadata about those documents are recorded under .ago/docs/info file. The
+// metadata contains original document name and current location under .ago
+// directory. Because current ago support only text file, this structure is
+// unnecessary. Actually, the struct is for future scaling. In future, ago will
+// be an document organizer like Mendeley[1] and will support not only text
+// file, but also pdf, odt, url, etc.
+//
+// File `words` under the .ago/ directory contains all data for words in the
+// documents. It contains each word and its frequency in the docs(in total and
+// per each doc), score of user, and meaning of the word. Calculated importance
+// can be in there maybe but not yet decided to add it.
+//
+// [1] https://www.mendeley.com/
 func init() {
 	if runtime.GOOS == ANDRD {
 		metadat_dir = ANDRD_TMPDIR
@@ -81,14 +106,30 @@ func init() {
 	metadat_dir = path.Join(metadat_dir, ".ago")
 	dbgl.Printf("metadata dir is at %s\n", metadat_dir)
 
-	if _, err := os.Stat(metadat_dir); err == nil {
+	docs_dir = path.Join(metadat_dir, DOCDIR)
+	// docs dir is already exists.
+	if _, err := os.Stat(docs_dir); err == nil {
 		return
 	}
 
-	dbgl.Printf("metadata dir is not exists. Create it.\n")
-	err := os.MkdirAll(metadat_dir, 0600)
+	dbgl.Printf("docs dir is not exists. Create it.\n")
+	err := os.MkdirAll(docs_dir, 0700)
 	if err != nil {
-		errl.Printf("metadatadir %s creation failed\n", metadat_dir)
+		errl.Printf("docs dir %s creation failed: %s\n", docs_dir, err)
 		os.Exit(1)
 	}
+
+	f, err := os.Create(path.Join(docs_dir, DOCINFO))
+	if err != nil {
+		errl.Printf("docs info file creation failed: %s\n", err)
+		os.Exit(1)
+	}
+	f.Close()
+
+	f, err = os.Create(path.Join(metadat_dir, WORDINFO))
+	if err != nil {
+		errl.Printf("words info file creation failed: %s\n", err)
+		os.Exit(1)
+	}
+	f.Close()
 }
