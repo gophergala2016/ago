@@ -14,6 +14,7 @@ import (
 	"log"
 	"os"
 	"path"
+	"path/filepath"
 	"runtime"
 	"strconv"
 )
@@ -25,9 +26,10 @@ const (
 	HELP_MSG     = "Use the source ;)\n"
 	ANDRD        = "android"
 	ANDRD_TMPDIR = "/data/local/tmp"
-	DOCDIR       = "docs"
+	DOCSDIR      = "docs"
 	DOCINFO      = "info"
 	WORDINFO     = "words"
+	DOCDIR_PREF  = "doc" // prefix of document directory
 )
 
 var (
@@ -83,11 +85,71 @@ func lsdocs(args []string) {
 	}
 }
 
+// file_exists checks whether a file of specific path exists.
+//
+// Returns true if exists, false if not.
+func file_exists(path string) bool {
+	if _, err := os.Stat(docs_dir); err == nil {
+		return true
+	}
+	return false
+}
+
+func analyze_words(bytes []byte) {
+	// TODO: analyze words in the document and save the information
+	fmt.Printf("analyze...\n%s\n", bytes)
+}
+
+func adddoc(file_path string) error {
+	if !file_exists(file_path) {
+		err := errors.New("file not exists")
+		return err
+	}
+
+	// read the file
+	bytes, err := ioutil.ReadFile(file_path)
+	if err != nil {
+		msg := fmt.Sprintf("failed to read file: %s", err)
+		err := errors.New(msg)
+		return err
+	}
+
+	// analyze words in the file content
+	analyze_words(bytes)
+
+	// create dir under docs/
+	docid := docs_info.Nr_docs // Name of field should be next_id
+	docdir := fmt.Sprintf("%s%d", DOCDIR_PREF, docid)
+	docdirpath := path.Join(docs_dir, docdir)
+	if err = os.MkdirAll(docdirpath, 0700); err != nil {
+		msg := fmt.Sprintf("failed to create dir: %s", err)
+		err = errors.New(msg)
+		return err
+	}
+
+	// write copy in the doc<doc id>/
+	_, docname := filepath.Split(file_path)
+	in_file_path := path.Join(docdirpath, docname)
+	if err = ioutil.WriteFile(in_file_path, bytes, 0600); err != nil {
+		msg := fmt.Sprintf("failed to write file: %s", err)
+		err = errors.New(msg)
+		return err
+	}
+
+	// add to docs_info global object
+	doc := document{Name: docname, Id: docid}
+	docs_info.Nr_docs += 1
+	docs_info.Docs = append(docs_info.Docs, doc)
+	return nil
+}
+
 func adddocs(args []string) {
-	for _, name := range args {
-		doc := document{Name: name, Id: docs_info.Nr_docs}
-		docs_info.Nr_docs += 1
-		docs_info.Docs = append(docs_info.Docs, doc)
+	for _, path := range args {
+		if err := adddoc(path); err != nil {
+			errl.Printf("failed to add doc %s: %s\n",
+				path, err)
+			os.Exit(1)
+		}
 	}
 	write_docs_info()
 }
@@ -200,7 +262,7 @@ func init() {
 	}
 	metadat_dir = path.Join(metadat_dir, ".ago")
 
-	docs_dir = path.Join(metadat_dir, DOCDIR)
+	docs_dir = path.Join(metadat_dir, DOCSDIR)
 	doci_path = path.Join(docs_dir, DOCINFO)
 	wordi_path = path.Join(metadat_dir, WORDINFO)
 
