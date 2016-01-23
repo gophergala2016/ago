@@ -7,7 +7,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"path"
@@ -31,7 +33,47 @@ var (
 	dbgl        = log.New(os.Stderr, "[dbg] ", 0)
 	metadat_dir = "/tmp/.ago"
 	docs_dir    = ""
+	doci_path   string // documents information file path
+	wordi_path  string // words information file path
+	docs_info   documents_info
 )
+
+// document contains informations for a document.
+type document struct {
+	Name string
+	Id   int // id of the document.
+}
+
+type documents_info struct {
+	Docs    []document
+	Nr_docs int
+}
+
+func read_docs_info() {
+	c, err := ioutil.ReadFile(doci_path)
+	if err != nil {
+		errl.Printf("failed to read doc info file: %s\n", err)
+		os.Exit(1)
+	}
+
+	if err := json.Unmarshal(c, &docs_info); err != nil {
+		errl.Printf("error while unmarshal doc info: %s\n", err)
+		dbgl.Printf("the json: %s\n", c)
+		os.Exit(1)
+	}
+}
+
+func write_docs_info() {
+	bytes, err := json.Marshal(docs_info)
+	if err != nil {
+		errl.Printf("failed to marshal docs_info: %s\n", err)
+		os.Exit(1)
+	}
+
+	if err := ioutil.WriteFile(doci_path, bytes, 0600); err != nil {
+		errl.Printf("failed to write marshaled docs_info: %s\n", err)
+	}
+}
 
 func lsdocs(args []string) {
 	fmt.Printf("lsdocs\n")
@@ -125,8 +167,12 @@ func init() {
 	dbgl.Printf("metadata dir is at %s\n", metadat_dir)
 
 	docs_dir = path.Join(metadat_dir, DOCDIR)
+	doci_path = path.Join(docs_dir, DOCINFO)
+	wordi_path = path.Join(metadat_dir, WORDINFO)
+
 	// docs dir is already exists.
 	if _, err := os.Stat(docs_dir); err == nil {
+		read_docs_info()
 		return
 	}
 
@@ -137,8 +183,7 @@ func init() {
 		os.Exit(1)
 	}
 
-	for _, file := range []string{path.Join(docs_dir, DOCINFO),
-		path.Join(metadat_dir, WORDINFO)} {
+	for _, file := range []string{doci_path, wordi_path} {
 		f, err := os.Create(file)
 		if err != nil {
 			errl.Printf("docs info file creation failed: %s\n", err)
@@ -151,4 +196,8 @@ func init() {
 			os.Exit(1)
 		}
 	}
+
+	docs_info.Nr_docs = 0
+	write_docs_info()
+	read_docs_info()
 }
