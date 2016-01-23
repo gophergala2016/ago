@@ -24,7 +24,7 @@ const (
 )
 
 var (
-	agol        = log.New(os.Stderr, "[ago] ", 0)
+	errl        = log.New(os.Stderr, "[err] ", 0)
 	dbgl        = log.New(os.Stderr, "[dbg] ", 0)
 	metadat_dir = "/tmp/.ago"
 )
@@ -56,7 +56,7 @@ func main() {
 	case "help":
 		fmt.Printf(HELP_MSG)
 	default:
-		agol.Printf("wrong commanad")
+		errl.Printf("wrong commanad")
 		os.Exit(1)
 	}
 }
