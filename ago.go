@@ -70,5 +70,16 @@ func init() {
 		metadat_dir = os.Getenv("HOME")
 	}
 	metadat_dir = path.Join(metadat_dir, ".ago")
-	dbgl.Printf("metadata dir is at %s", metadat_dir)
+	dbgl.Printf("metadata dir is at %s\n", metadat_dir)
+
+	if _, err := os.Stat(metadat_dir); err == nil {
+		return
+	}
+
+	dbgl.Printf("metadata dir is not exists. Create it.\n")
+	err := os.MkdirAll(metadat_dir, 0600)
+	if err != nil {
+		errl.Printf("metadatadir %s creation failed\n", metadat_dir)
+		os.Exit(1)
+	}
 }
