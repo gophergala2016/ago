@@ -8,12 +8,14 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"path"
 	"runtime"
+	"strconv"
 )
 
 const (
@@ -90,8 +92,34 @@ func adddocs(args []string) {
 	write_docs_info()
 }
 
+// rmdoc remove a document with specific id.
+//
+// Returns true if success to remove the document, false if not
+func rmdoc(target int) error {
+	for idx, doc := range docs_info.Docs {
+		if doc.Id != target {
+			continue
+		}
+		docs_info.Docs = append(docs_info.Docs[:idx],
+			docs_info.Docs[idx+1:]...)
+		return nil
+	}
+	return errors.New("no such doc")
+}
+
 func rmdocs(args []string) {
-	fmt.Printf("rm docs %s\n", args)
+	for _, arg := range args {
+		target, err := strconv.Atoi(arg)
+		if err != nil {
+			errl.Printf("argument must be doc id. err: \n", err)
+		}
+		if err = rmdoc(target); err != nil {
+			fmt.Printf("failed to remove doc id %d: %s\n",
+				target, err)
+		}
+	}
+
+	write_docs_info()
 }
 
 func do_test(args []string) {
