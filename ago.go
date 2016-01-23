@@ -53,6 +53,14 @@ func main() {
 	cmd := args[1]
 	args = args[2:]
 	switch cmd {
+	case "ls-docs":
+		fmt.Printf("list docs\n")
+	case "add-docs":
+		fmt.Printf("add doc\n")
+	case "rm-docs":
+		fmt.Printf("remove doc\n")
+	case "test":
+		fmt.Printf("let the game begin\n")
 	case "help":
 		fmt.Printf(HELP_MSG)
 	default:
