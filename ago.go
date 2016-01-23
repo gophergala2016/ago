@@ -127,5 +127,10 @@ func init() {
 			os.Exit(1)
 		}
 		f.Close()
+
+		if err = os.Chmod(file, 0600); err != nil {
+			errl.Printf("chmod file %s failed: %s\n", err)
+			os.Exit(1)
+		}
 	}
 }
