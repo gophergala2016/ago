@@ -23,6 +23,20 @@ var (
 	agol = log.New(os.Stderr, "[ago] ", 0)
 )
 
+// ago usage is similar to familiar tools:
+// 	ago <command> [argument ...]
+//
+// commands are:
+// ls-docs, add-docs, rm-docs: list, add, remove documentation[s].
+// test: start a test. Number of questions can be specified as option.
+//
+// Internally, ago uses a metadata directory for state saving. Path of the
+// directory is `$HOME/.ago`. If `$HOME` is not exists, `/tmp` is used as
+// default. For Android support in future, it should be `/data/local/tmp` at
+// future.
+//
+// The description above is lie because this program is nothing for now. It is
+// just a plan.
 func main() {
 	args := os.Args
 	if len(args) < 2 {
