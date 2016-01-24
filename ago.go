@@ -150,10 +150,10 @@ func analyze_words(bytes []byte, docid int) {
 		if !exists {
 			winfo = wordinfo{Word: word}
 			winfo.Freq = make(map[string]int)
-			winfos.Wordinfos[word] = winfo
 		}
 		winfo.Totalfreq += freq
 		winfo.Freq[strconv.Itoa(docid)] = freq
+		winfos.Wordinfos[word] = winfo
 	}
 }
 
