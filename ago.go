@@ -288,10 +288,17 @@ func html_to_txt(s string) string {
 }
 
 // pick_txt picks up a section inside a text.
-// the section should starts / ends with specific text, start and end
+// the section should starts / ends with specific text, start and end.
+// If the section not found, it just returns blank string.
 func pick_section(s string, start string, end string) string {
 	sidx := strings.Index(s, start)
+	if sidx == -1 {
+		return ""
+	}
 	eidx := sidx + strings.Index(s[sidx:], end)
+	if eidx == -1 {
+		return ""
+	}
 
 	return s[sidx:eidx]
 }
