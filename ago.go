@@ -296,7 +296,7 @@ func mean_section(s string) string {
 	mean_start := strings.Index(s, mean_start_txt)
 	mean_end := mean_start + strings.Index(s[mean_start:], mean_end_txt)
 
-	return s[mean_start:mean_end + len(mean_end_txt)]
+	return s[mean_start : mean_end+len(mean_end_txt)]
 }
 
 func ex_section(s string) string {
@@ -306,13 +306,13 @@ func ex_section(s string) string {
 	ex_start := strings.Index(s, ex_start_txt)
 	ex_end := ex_start + strings.Index(s[ex_start:], ex_end_txt)
 
-	return s[ex_start:ex_end + len(ex_end_txt)]
+	return s[ex_start : ex_end+len(ex_end_txt)]
 }
 
-func dic(args []string) {
+func daum_dict(q string) string {
 	daumdic_url := "http://dic.daum.net/search.do?q="
 	suffix := "&dic=eng&search_first=Y"
-	url := fmt.Sprintf("%s%s%s", daumdic_url, args[0], suffix)
+	url := fmt.Sprintf("%s%s%s", daumdic_url, q, suffix)
 	resp, err := http.Get(url)
 	if err != nil {
 		errl.Printf("error while get %s: %s", url, err)
@@ -329,8 +329,12 @@ func dic(args []string) {
 	html_src := string(body)
 	mean_sect := mean_section(html_src)
 	ex_sect := ex_section(html_src)
-	fmt.Printf("Mean\n%s\n\n", text_of_html(mean_sect))
-	fmt.Printf("Ex\n%s\n\n", text_of_html(ex_sect))
+	return fmt.Sprintf("Meaning\n%s\n\nExamples\n%s\n",
+		text_of_html(mean_sect), text_of_html(ex_sect))
+}
+
+func dic(args []string) {
+	fmt.Printf("%s\n", daum_dict(args[0]))
 }
 
 // main is the entry point of `ago`.
