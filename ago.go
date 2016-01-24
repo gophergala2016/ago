@@ -277,7 +277,8 @@ func html_to_txt(s string) string {
 	for {
 		tagopen := strings.IndexByte(s, '<')
 		tagclose := strings.IndexByte(s, '>')
-		if tagopen == -1 || tagclose == -1 || tagopen > len(s) || tagclose > len(s) {
+		if tagopen == -1 || tagclose == -1 || tagopen > len(s) ||
+			tagclose > len(s) {
 			break
 		}
 		if tagopen > tagclose {
@@ -556,7 +557,8 @@ func init() {
 	for _, file := range []string{doci_path, wordi_path} {
 		f, err := os.Create(file)
 		if err != nil {
-			errl.Printf("docs info file creation failed: %s\n", err)
+			errl.Printf("docs info file creation failed: %s\n",
+				err)
 			os.Exit(1)
 		}
 		f.Close()
