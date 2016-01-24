@@ -348,8 +348,54 @@ func dic(args []string) {
 	fmt.Printf("%s\n", daum_dict(args[0]))
 }
 
+func get_questions(args []string) []wordinfo {
+	ret := []wordinfo{}
+	wis := winfos.Wordinfos
+
+	// TODO: real algorithm
+	for _, wi := range wis {
+		ret = append(ret, wi)
+		if len(ret) > 5 {
+			break
+		}
+	}
+
+	return ret
+}
+
 func do_test(args []string) {
-	fmt.Printf("do test %s\n", args)
+	fmt.Printf("Let the game begin with %s\n\n", args)
+	fmt.Printf("Ready? (Yes/[No])\n")
+	input := ""
+	fmt.Scanln(&input)
+	if input == "" || strings.HasPrefix(input, "N") {
+		fmt.Printf("OK, see you later ;)\n")
+		return
+	}
+
+	questions := get_questions(args)
+	date := time.Now()
+	for _, wi := range questions {
+		question := wi.Word
+		fmt.Printf("==============================================\n")
+		fmt.Printf("Press Enter after you remember the meaning of:\n")
+		fmt.Printf("\n%s\n", wi.Word)
+		fmt.Printf("\n The word was referenced %d times\n",
+			wi.Totalfreq)
+		fmt.Scanln(&input)
+		fmt.Printf("----------------------------------------------\n")
+		fmt.Printf("The maning of %s was:\n%s\n\n",
+			question, daum_dict(question))
+		fmt.Printf("----------------------------------------------\n")
+		fmt.Printf("Were you understanding it well? (Yes/No)\n")
+		fmt.Scanln(&input)
+		if strings.HasPrefix(input, "Y") {
+			wi.Succ_history = append(wi.Succ_history, date)
+		} else {
+			wi.Fail_history = append(wi.Fail_history, date)
+		}
+		fmt.Printf("\n\n\n")
+	}
 }
 
 // main is the entry point of `ago`.
