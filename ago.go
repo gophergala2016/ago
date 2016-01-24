@@ -438,7 +438,7 @@ func do_singletest(wi wordinfo, date time.Time, nr, total int) {
 }
 
 func do_test(args []string) {
-	fmt.Printf("Let the game begin with %s\n\n", args)
+	fmt.Printf("Let the game begin\n\n")
 	fmt.Printf("Ready? (Yes/[No])\n")
 	input := ""
 	fmt.Scanln(&input)
