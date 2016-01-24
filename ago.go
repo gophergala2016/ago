@@ -258,10 +258,6 @@ func lswords(args []string) {
 	}
 }
 
-func do_test(args []string) {
-	fmt.Printf("do test %s\n", args)
-}
-
 // html_to_txt extracts text that browser displays from html source.
 func html_to_txt(s string) string {
 	// TODO: DRY principle...
@@ -337,6 +333,10 @@ func daum_dict(q string) string {
 
 func dic(args []string) {
 	fmt.Printf("%s\n", daum_dict(args[0]))
+}
+
+func do_test(args []string) {
+	fmt.Printf("do test %s\n", args)
 }
 
 // main is the entry point of `ago`.
