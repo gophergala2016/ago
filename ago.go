@@ -401,8 +401,8 @@ func do_test(args []string) {
 	date := time.Now()
 	for _, wi := range questions {
 		do_singletest(wi, date)
+		write_words_info()
 	}
-	write_words_info()
 }
 
 // main is the entry point of `ago`.
