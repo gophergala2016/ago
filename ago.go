@@ -445,7 +445,7 @@ func do_test(args []string) {
 	questions := get_questions(args)
 	date := time.Now()
 	for idx, wi := range questions {
-		do_singletest(wi, date, idx, len(questions))
+		do_singletest(wi, date, idx+1, len(questions))
 		write_words_info()
 	}
 }
