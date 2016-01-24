@@ -367,13 +367,14 @@ func get_questions(args []string) []wordinfo {
 	return ret
 }
 
-func do_singletest(wi wordinfo, date time.Time) {
+func do_singletest(wi wordinfo, date time.Time, nr, total int) {
 	input := ""
 	question := wi.Word
 
 	fmt.Printf("==============================================\n")
-	fmt.Printf("Press Enter after you remember the meaning of:\n")
+	fmt.Printf("Question %d/%d:\n", nr, total)
 	fmt.Printf("\n [[ %s ]]\n", wi.Word)
+	fmt.Printf("\n\nPress Enter after you remember the meaning of it:\n")
 	fmt.Printf("\n Reference: %d Test success/fail: %d/%d\n",
 		wi.Totalfreq, len(wi.Succ_history), len(wi.Fail_history))
 	fmt.Scanln(&input)
@@ -383,11 +384,14 @@ func do_singletest(wi wordinfo, date time.Time) {
 	fmt.Printf("----------------------------------------------\n")
 	fmt.Printf("Were you understanding it well? (Yes/No)\n")
 	fmt.Scanln(&input)
-	if strings.HasPrefix(input, "Y") {
+	if strings.HasPrefix(strings.ToUpper(input), "Y") {
 		wi.Succ_history = append(wi.Succ_history, date)
+		fmt.Printf("your feedback, Yes applied\n")
 	} else {
 		wi.Fail_history = append(wi.Fail_history, date)
+		fmt.Printf("your feedback, No applied\n")
 	}
+	fmt.Printf("----------------------------------------------\n")
 	fmt.Printf("\n\n\n")
 }
 
@@ -396,15 +400,15 @@ func do_test(args []string) {
 	fmt.Printf("Ready? (Yes/[No])\n")
 	input := ""
 	fmt.Scanln(&input)
-	if input == "" || strings.HasPrefix(input, "N") {
+	if strings.HasPrefix(strings.ToUpper(input), "N") {
 		fmt.Printf("OK, see you later ;)\n")
 		return
 	}
 
 	questions := get_questions(args)
 	date := time.Now()
-	for _, wi := range questions {
-		do_singletest(wi, date)
+	for idx, wi := range questions {
+		do_singletest(wi, date, idx, len(questions))
 		write_words_info()
 	}
 }
