@@ -60,7 +60,10 @@ Commands are:
 - `dic`: Search meaning of a word and its usage example using dictionary.
    Currently, it uses Daum English-Korean Dictionary[1] service. However, as
    the design says, it can be alternated to English dictionary or other in
-   future as user want.
+   future as user want. This command is quite useful for non-English native
+   terminal familiar hacker. In the case, he can reduce time consumed by
+   dictionary searching because terminal is close and dictionary on browser or
+   book shelf is far.
 - `test`: Start a self test. Within test, `ago` gives a important word and
    gives time for user to remember the meaning of the word. After that, user
    can signal `ago`. `ago` shows real meaning and usage example of the word to
