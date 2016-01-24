@@ -367,8 +367,13 @@ func (a by_import) Less(i, j int) bool {
 	ltl := a[i]
 	big := a[j]
 
-	l_imp := ltl.Totalfreq + len(ltl.Fail_history) - len(ltl.Succ_history)
-	b_imp := big.Totalfreq + len(big.Fail_history) - len(big.Succ_history)
+	lf := len(ltl.Fail_history)
+	ls := len(ltl.Succ_history)
+	bf := len(big.Fail_history)
+	bs := len(big.Succ_history)
+
+	l_imp := ltl.Totalfreq + 10*(lf-ls)
+	b_imp := big.Totalfreq + 10*(bf-bs)
 
 	// We need descendent order
 	return l_imp > b_imp
