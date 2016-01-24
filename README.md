@@ -105,37 +105,37 @@ Having said that Nintendo has been hacked and Sony has been hacked twice.  듣�
 당했다.  예문 더보기
 
 $ ./ago test
-Let the game begin with []
+Let the game begin
 
 Ready? (Yes/[No])
 y
 ==============================================
-Question 1/6:
+Question 1/5:
 
- [[ math ]]
+ [[ the ]]
 
 
 Press Enter after you remember the meaning of it:
 
- Reference: 2 Test success/fail: 0/0
+ Reference: 185 Test success/fail: 0/0
 
 ----------------------------------------------
-The maning of math was:
+The maning of the was:
 Meaning
-①수학 ②계산 ③수리
+①그 ②그럴수록 ③더욱더
 
-Examples
-A new application will help those who struggle with math.  듣기 시작
-(Kidstimes) 새로운 어플리케이션이 수학으로 고심하는 사람들을 도와줄 것입니다.
-A math teacher in the U.S.  recently turned 100 years old.  듣기 시작
-(Kindertimes) 최근에 미국의 한 수학 선생님이 100세가 되었습니다.  I think that
-teaching children how to do math without calculators is good, too.  듣기 시작
-(Kidstimes) 저는 학생들에게 계산기 없이 수학을 하는 방법을 가르치는 것도 좋다고
-생각합니다.  If calculators are banned in math class, then students' scores
-will only get worse.  듣기 시작 (Kidstimes) 만약 수학시간에 계산기가 금지되면,
-학생들의 점수는 더욱 악화 될 것입니다.  What do you think? Should calculators
-be banned in math class? 듣기 시작 (Kidstimes) 당신은 어떻게 생각합니까?
-수학시간에 계산기 사용을 해야 합니까? 예문 더보기
+Examples It is located between the Bago Yoma and Shan Yoma mountain ranges.
+듣기 시작 (Kidstimes) 네피도는 바고 요마산맥과 샨 요마 산맥 사이에 위치해
+있습니다.  That is thanks to the advancement of high-speed telecommunication
+and powerful graphics chips.  듣기 시작 (Kidstimes) 그것은 빠른 속도의
+전자통신과 강력한 그래픽 칩의 발전 덕택입니다.  He condemned the Highlander's
+culture because of past rebellious uprisings.  듣기 시작 (Kidstimes) 그는
+과거의 반항적인 폭동 때문에 하일랜드 사람들의 문화를 비난했습니다.  The
+so-called Belt Scooter consists of three parts: a deck, handlebars, and wheels.
+듣기 시작 (Kidstimes) 이른바 벨트 스쿠터는 세 부분으로 이루어져 있습니다: 갑판,
+핸들, 그리고 바퀴들.  The problems do not magically disappear, but you may feel
+better.  듣기 시작 (Kidstimes) 그 문제들이 마법처럼 사라지지는 않지만, 너는
+기분이 나아질지도 몰라.  예문 더보기
 
 
 ----------------------------------------------
@@ -147,14 +147,14 @@ your feedback, Yes applied
 
 
 ==============================================
-Question 2/6:
+Question 2/5:
 
- [[ odd ]]
+ [[ to ]]
 
 
 Press Enter after you remember the meaning of it:
 
- Reference: 1 Test success/fail: 0/0
+ Reference: 83 Test success/fail: 0/0
 ```
 
 
