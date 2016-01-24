@@ -17,6 +17,7 @@ import (
 	"path"
 	"path/filepath"
 	"runtime"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -352,19 +353,54 @@ func dic(args []string) {
 	fmt.Printf("%s\n", daum_dict(args[0]))
 }
 
+type by_import []wordinfo
+
+func (a by_import) Len() int {
+	return len(a)
+}
+
+func (a by_import) Swap(i, j int) {
+	a[i], a[j] = a[j], a[i]
+}
+
+func (a by_import) Less(i, j int) bool {
+	ltl := a[i]
+	big := a[j]
+
+	l_imp := ltl.Totalfreq + len(ltl.Fail_history) - len(ltl.Succ_history)
+	b_imp := big.Totalfreq + len(big.Fail_history) - len(big.Succ_history)
+
+	// We need descendent order
+	return l_imp > b_imp
+}
+
 func get_questions(args []string) []wordinfo {
+	pool := []wordinfo{}
 	ret := []wordinfo{}
 	wis := winfos.Wordinfos
+	nr_ques := 5
 
-	// TODO: real algorithm
+	if len(args) > 0 {
+		nr, err := strconv.Atoi(args[0])
+		if err != nil {
+			errl.Printf("wrong argument %s. it must be integer\n",
+				args[0])
+		} else {
+			nr_ques = nr
+		}
+	}
+
+	// Get random nr_ques * 10 words
 	for _, wi := range wis {
-		ret = append(ret, wi)
-		if len(ret) > 5 {
+		pool = append(pool, wi)
+		if len(ret) == nr_ques*10 {
 			break
 		}
 	}
 
-	return ret
+	// Sort and use high score ones
+	sort.Sort(by_import(pool))
+	return pool[:nr_ques]
 }
 
 func do_singletest(wi wordinfo, date time.Time, nr, total int) {
