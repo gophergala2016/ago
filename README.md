@@ -92,17 +92,21 @@ $ ./ago dic hack
 Meaning
 ①난도질하다 ②늙은 말 ③고용된
 
-Examples The attacks have been conducted by an iPhone-hacking wonder kid.  듣기
-시작 (Teentimes) 그 공격은 아이폰 해킹 원더 키드에 의해 행해져 왔다.  It seems
-as if a series of hacking incidents are plaguing the nation.  듣기 시작
-(Teentimes) 일련의 해킹 사고들이 한국을 괴롭히는 것 같다.  Hacking companies to
-"help them" in the long run is still unjustified.  듣기 시작 (Teentimes)
-"그들을 돕기 위한" 해킹 회사들은 결국 정당화되지 않는다.  2nd Statement: Hacks
-can be used as a powerful and effective artistic expression.  듣기 시작
-(Teentimes) 2차 진술: 해킹은 강력하고 효과적인 예술적 표현으로 쓰여질 수 있다.
-Having said that Nintendo has been hacked and Sony has been hacked twice.  듣기
-시작 (Teentimes) 그렇기는 해도 닌텐도도 해킹을 당했고 소니도 두 번이나 해킹을
-당했다.  예문 더보기
+Examples
+ The attacks have been conducted by an iPhone-hacking wonder kid.
+ 듣기 시작 (Teentimes) 그 공격은 아이폰 해킹 원더 키드에 의해 행해져 왔다.
+ It seems as if a series of hacking incidents are plaguing the nation.
+ 듣기 시작 (Teentimes) 일련의 해킹 사고들이 한국을 괴롭히는 것 같다.
+ Hacking companies to "help them" in the long run is still unjustified.
+ 듣기 시작 (Teentimes) "그들을 돕기 위한" 해킹 회사들은 결국 정당화되지 않는다.
+ 2nd Statement: Hacks can be used as a powerful and effective artistic
+ expression.
+ 듣기 시작 (Teentimes) 2차 진술: 해킹은 강력하고 효과적인 예술적 표현으로
+ 쓰여질 수 있다.
+ Having said that Nintendo has been hacked and Sony has been hacked twice.
+ 듣기 시작 (Teentimes) 그렇기는 해도 닌텐도도 해킹을 당했고 소니도 두 번이나
+ 해킹을 당했다.
+ 예문 더보기
 
 $ ./ago test
 Let the game begin
@@ -124,19 +128,23 @@ The maning of the was:
 Meaning
 ①그 ②그럴수록 ③더욱더
 
-Examples It is located between the Bago Yoma and Shan Yoma mountain ranges.
-듣기 시작 (Kidstimes) 네피도는 바고 요마산맥과 샨 요마 산맥 사이에 위치해
-있습니다.  That is thanks to the advancement of high-speed telecommunication
-and powerful graphics chips.  듣기 시작 (Kidstimes) 그것은 빠른 속도의
-전자통신과 강력한 그래픽 칩의 발전 덕택입니다.  He condemned the Highlander's
-culture because of past rebellious uprisings.  듣기 시작 (Kidstimes) 그는
-과거의 반항적인 폭동 때문에 하일랜드 사람들의 문화를 비난했습니다.  The
-so-called Belt Scooter consists of three parts: a deck, handlebars, and wheels.
-듣기 시작 (Kidstimes) 이른바 벨트 스쿠터는 세 부분으로 이루어져 있습니다: 갑판,
-핸들, 그리고 바퀴들.  The problems do not magically disappear, but you may feel
-better.  듣기 시작 (Kidstimes) 그 문제들이 마법처럼 사라지지는 않지만, 너는
-기분이 나아질지도 몰라.  예문 더보기
-
+Example
+The problems do not magically disappear, but you may feel better.
+ 듣기 시작 (Kidstimes) 그 문제들이 마법처럼 사라지지는 않지만, 너는 기분이
+ 나아질지도 몰라.
+ Every point that you do not challenge makes your opponent's argument stronger.
+ 듣기 시작 (Kidstimes) 당신이 이의를 제기하지 않는 모든 의견은 당신의 상대편의
+ 주장을 더욱 강하게 만듭니다.
+ A bike can become more so if you attach Fontus to the bike.
+ 듣기 시작 (Kidstimes) 만약 여러분이 자전거에 Fontus를 부착한다면, 그것은 더욱
+ 그렇게 될 수 있습니다.
+ You can donate money to the NoPhone project on a website.
+ 듣기 시작 (Kidstimes) 당신은 웹사이트에서 노폰 프로젝트에 돈을 기부할 수
+ 있습니다.
+ Once you do, learning it will become fun instead of work.
+ 듣기 시작 (Kidstimes) 일단 그렇게 하면, 그것을 배우는 것은 일하는 것이 아닌
+ 즐거움이 될 것입니다.
+ 예문 더보기
 
 ----------------------------------------------
 Were you understanding it well? (Yes/No)
