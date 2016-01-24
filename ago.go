@@ -50,7 +50,7 @@ type document struct {
 
 type documents_info struct {
 	Docs    []document
-	Nr_docs int
+	Next_id int
 }
 
 func read_docs_info() {
@@ -118,7 +118,7 @@ func adddoc(file_path string) error {
 	analyze_words(bytes)
 
 	// create dir under docs/
-	docid := docs_info.Nr_docs // Name of field should be next_id
+	docid := docs_info.Next_id
 	docdir := fmt.Sprintf("%s%d", DOCDIR_PREF, docid)
 	docdirpath := path.Join(docs_dir, docdir)
 	if err = os.MkdirAll(docdirpath, 0700); err != nil {
@@ -138,7 +138,7 @@ func adddoc(file_path string) error {
 
 	// add to docs_info global object
 	doc := document{Name: docname, Id: docid}
-	docs_info.Nr_docs += 1
+	docs_info.Next_id += 1
 	docs_info.Docs = append(docs_info.Docs, doc)
 	return nil
 }
@@ -292,7 +292,7 @@ func init() {
 		}
 	}
 
-	docs_info.Nr_docs = 0
+	docs_info.Next_id = 0
 	write_docs_info()
 	read_docs_info()
 }
