@@ -89,18 +89,17 @@ $ ./ago dic hack
 Meaning
 ①난도질하다 ②늙은 말 ③고용된
 
-Examples
-The attacks have been conducted by an iPhone-hacking wonder kid.
- 듣기 시작 (Teentimes) 그 공격은 아이폰 해킹 원더 키드에 의해 행해져 왔다.
- It seems as if a series of hacking incidents are plaguing the nation.
- 듣기 시작 (Teentimes) 일련의 해킹 사고들이 한국을 괴롭히는 것 같다.
- Hacking companies to "help them" in the long run is still unjustified.
- 듣기 시작 (Teentimes) "그들을 돕기 위한" 해킹 회사들은 결국 정당화되지 않는다.
- 2nd Statement: Hacks can be used as a powerful and effective artistic expression.
- 듣기 시작 (Teentimes) 2차 진술: 해킹은 강력하고 효과적인 예술적 표현으로 쓰여질 수 있다.
- Having said that Nintendo has been hacked and Sony has been hacked twice.
- 듣기 시작 (Teentimes) 그렇기는 해도 닌텐도도 해킹을 당했고 소니도 두 번이나 해킹을 당했다.
- 예문 더보기
+Examples The attacks have been conducted by an iPhone-hacking wonder kid.  듣기
+시작 (Teentimes) 그 공격은 아이폰 해킹 원더 키드에 의해 행해져 왔다.  It seems
+as if a series of hacking incidents are plaguing the nation.  듣기 시작
+(Teentimes) 일련의 해킹 사고들이 한국을 괴롭히는 것 같다.  Hacking companies to
+"help them" in the long run is still unjustified.  듣기 시작 (Teentimes)
+"그들을 돕기 위한" 해킹 회사들은 결국 정당화되지 않는다.  2nd Statement: Hacks
+can be used as a powerful and effective artistic expression.  듣기 시작
+(Teentimes) 2차 진술: 해킹은 강력하고 효과적인 예술적 표현으로 쓰여질 수 있다.
+Having said that Nintendo has been hacked and Sony has been hacked twice.  듣기
+시작 (Teentimes) 그렇기는 해도 닌텐도도 해킹을 당했고 소니도 두 번이나 해킹을
+당했다.  예문 더보기
 
 $ ./ago test
 Let the game begin with []
@@ -123,16 +122,17 @@ Meaning
 ①수학 ②계산 ③수리
 
 Examples
-A new application will help those who struggle with math.
- 듣기 시작 (Kidstimes) 새로운 어플리케이션이 수학으로 고심하는 사람들을 도와줄 것입니다.
- A math teacher in the U.S.
- recently turned 100 years old.
- 듣기 시작 (Kindertimes) 최근에 미국의 한 수학 선생님이 100세가 되었습니다.
- I think that teaching children how to do math without calculators is good, too.
- 듣기 시작 (Kidstimes) 저는 학생들에게 계산기 없이 수학을 하는 방법을 가르치는 것도 좋다고 생각합니다.
- If calculators are banned in math class, then students' scores will only get worse.
- 듣기 시작 (Kidstimes) 만약 수학시간에 계산기가 금지되면, 학생들의 점수는 더욱 악화 될 것입니다.
- What do you think? Should calculators be banned in math class? 듣기 시작 (Kidstimes) 당신은 어떻게 생각합니까? 수학시간에 계산기 사용을 해야 합니까? 예문 더보기
+A new application will help those who struggle with math.  듣기 시작
+(Kidstimes) 새로운 어플리케이션이 수학으로 고심하는 사람들을 도와줄 것입니다.
+A math teacher in the U.S.  recently turned 100 years old.  듣기 시작
+(Kindertimes) 최근에 미국의 한 수학 선생님이 100세가 되었습니다.  I think that
+teaching children how to do math without calculators is good, too.  듣기 시작
+(Kidstimes) 저는 학생들에게 계산기 없이 수학을 하는 방법을 가르치는 것도 좋다고
+생각합니다.  If calculators are banned in math class, then students' scores
+will only get worse.  듣기 시작 (Kidstimes) 만약 수학시간에 계산기가 금지되면,
+학생들의 점수는 더욱 악화 될 것입니다.  What do you think? Should calculators
+be banned in math class? 듣기 시작 (Kidstimes) 당신은 어떻게 생각합니까?
+수학시간에 계산기 사용을 해야 합니까? 예문 더보기
 
 
 ----------------------------------------------
