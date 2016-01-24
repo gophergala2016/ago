@@ -391,6 +391,7 @@ func do_singletest(wi wordinfo, date time.Time, nr, total int) {
 		wi.Fail_history = append(wi.Fail_history, date)
 		fmt.Printf("your feedback, No applied\n")
 	}
+	winfos.Wordinfos[wi.Word] = wi
 	fmt.Printf("----------------------------------------------\n")
 	fmt.Printf("\n\n\n")
 }
