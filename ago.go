@@ -363,6 +363,30 @@ func get_questions(args []string) []wordinfo {
 	return ret
 }
 
+func do_singletest(wi wordinfo, date time.Time) {
+	input := ""
+	question := wi.Word
+
+	fmt.Printf("==============================================\n")
+	fmt.Printf("Press Enter after you remember the meaning of:\n")
+	fmt.Printf("\n [[ %s ]]\n", wi.Word)
+	fmt.Printf("\n Reference: %d Test success/fail: %d/%d\n",
+		wi.Totalfreq, len(wi.Succ_history), len(wi.Fail_history))
+	fmt.Scanln(&input)
+	fmt.Printf("----------------------------------------------\n")
+	fmt.Printf("The maning of %s was:\n%s\n\n",
+		question, daum_dict(question))
+	fmt.Printf("----------------------------------------------\n")
+	fmt.Printf("Were you understanding it well? (Yes/No)\n")
+	fmt.Scanln(&input)
+	if strings.HasPrefix(input, "Y") {
+		wi.Succ_history = append(wi.Succ_history, date)
+	} else {
+		wi.Fail_history = append(wi.Fail_history, date)
+	}
+	fmt.Printf("\n\n\n")
+}
+
 func do_test(args []string) {
 	fmt.Printf("Let the game begin with %s\n\n", args)
 	fmt.Printf("Ready? (Yes/[No])\n")
@@ -376,25 +400,7 @@ func do_test(args []string) {
 	questions := get_questions(args)
 	date := time.Now()
 	for _, wi := range questions {
-		question := wi.Word
-		fmt.Printf("==============================================\n")
-		fmt.Printf("Press Enter after you remember the meaning of:\n")
-		fmt.Printf("\n [[ %s ]]\n", wi.Word)
-		fmt.Printf("\n Reference: %d Test success/fail: %d/%d\n",
-			wi.Totalfreq, len(wi.Succ_history), len(wi.Fail_history))
-		fmt.Scanln(&input)
-		fmt.Printf("----------------------------------------------\n")
-		fmt.Printf("The maning of %s was:\n%s\n\n",
-			question, daum_dict(question))
-		fmt.Printf("----------------------------------------------\n")
-		fmt.Printf("Were you understanding it well? (Yes/No)\n")
-		fmt.Scanln(&input)
-		if strings.HasPrefix(input, "Y") {
-			wi.Succ_history = append(wi.Succ_history, date)
-		} else {
-			wi.Fail_history = append(wi.Fail_history, date)
-		}
-		fmt.Printf("\n\n\n")
+		do_singletest(wi, date)
 	}
 	write_words_info()
 }
