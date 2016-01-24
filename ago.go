@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"path"
 	"path/filepath"
@@ -261,6 +262,77 @@ func do_test(args []string) {
 	fmt.Printf("do test %s\n", args)
 }
 
+func text_of_html(s string) string {
+	for {
+		scriptopen := strings.Index(s, "<script")
+		scriptclose := strings.Index(s, "</script>")
+		if scriptopen == -1 || scriptclose == -1 {
+			break
+		}
+		s = s[:scriptopen] + s[scriptclose+len("</script>"):]
+	}
+	for {
+		tagopen := strings.IndexByte(s, '<')
+		tagclose := strings.IndexByte(s, '>')
+		if tagopen == -1 || tagclose == -1 || tagopen > len(s) || tagclose > len(s) {
+			break
+		}
+		if tagopen > tagclose {
+			fmt.Printf("something wrong: %d %d %s\n",
+				tagopen, tagclose, s[tagclose:tagclose+200])
+			os.Exit(1)
+			break
+		}
+
+		s = s[:tagopen] + s[tagclose+1:]
+	}
+	return s
+}
+
+func mean_section(s string) string {
+	mean_start_txt := "<ul class=\"list_mean\""
+	mean_end_txt := "</ul>"
+
+	mean_start := strings.Index(s, mean_start_txt)
+	mean_end := mean_start + strings.Index(s[mean_start:], mean_end_txt)
+
+	return s[mean_start:mean_end + len(mean_end_txt)]
+}
+
+func ex_section(s string) string {
+	ex_start_txt := "<div class=\"list_exam\">"
+	ex_end_txt := "<div class=\"result_sch\">"
+
+	ex_start := strings.Index(s, ex_start_txt)
+	ex_end := ex_start + strings.Index(s[ex_start:], ex_end_txt)
+
+	return s[ex_start:ex_end + len(ex_end_txt)]
+}
+
+func dic(args []string) {
+	daumdic_url := "http://dic.daum.net/search.do?q="
+	suffix := "&dic=eng&search_first=Y"
+	url := fmt.Sprintf("%s%s%s", daumdic_url, args[0], suffix)
+	resp, err := http.Get(url)
+	if err != nil {
+		errl.Printf("error while get %s: %s", url, err)
+		os.Exit(1)
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	resp.Body.Close()
+	if err != nil {
+		errl.Printf("failed to read body: %s", err)
+		os.Exit(1)
+	}
+
+	html_src := string(body)
+	mean_sect := mean_section(html_src)
+	ex_sect := ex_section(html_src)
+	fmt.Printf("Mean\n%s\n\n", text_of_html(mean_sect))
+	fmt.Printf("Ex\n%s\n\n", text_of_html(ex_sect))
+}
+
 // main is the entry point of `ago`.
 // ago usage is similar to familiar tools:
 // 	ago <command> [argument ...]
@@ -292,6 +364,8 @@ func main() {
 		rmdocs(args)
 	case "words":
 		lswords(args)
+	case "dic":
+		dic(args)
 	case "test":
 		do_test(args)
 	case "help":
