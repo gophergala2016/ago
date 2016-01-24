@@ -379,9 +379,9 @@ func do_test(args []string) {
 		question := wi.Word
 		fmt.Printf("==============================================\n")
 		fmt.Printf("Press Enter after you remember the meaning of:\n")
-		fmt.Printf("\n%s\n", wi.Word)
-		fmt.Printf("\n The word was referenced %d times\n",
-			wi.Totalfreq)
+		fmt.Printf("\n [[ %s ]]\n", wi.Word)
+		fmt.Printf("\n Reference: %d Test success/fail: %d/%d\n",
+			wi.Totalfreq, len(wi.Succ_history), len(wi.Fail_history))
 		fmt.Scanln(&input)
 		fmt.Printf("----------------------------------------------\n")
 		fmt.Printf("The maning of %s was:\n%s\n\n",
