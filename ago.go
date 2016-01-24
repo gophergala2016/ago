@@ -22,6 +22,29 @@ import (
 	"time"
 )
 
+// document contains informations for a document.
+type document struct {
+	Name string
+	Id   int // id of the document.
+}
+
+type documents_info struct {
+	Docs    []document
+	Next_id int
+}
+
+type wordinfo struct {
+	Word         string
+	Totalfreq    int
+	Freq         map[string]int
+	Succ_history []time.Time
+	Fail_history []time.Time
+}
+
+type wordinfos struct {
+	Wordinfos map[string]wordinfo
+}
+
 const (
 	CMD          = "ago"
 	USAGE        = "USAGE: " + CMD + " <commands> [argument ...]\n"
@@ -45,29 +68,6 @@ var (
 	docs_info   documents_info
 	winfos      wordinfos
 )
-
-// document contains informations for a document.
-type document struct {
-	Name string
-	Id   int // id of the document.
-}
-
-type documents_info struct {
-	Docs    []document
-	Next_id int
-}
-
-type wordinfo struct {
-	Word         string
-	Totalfreq    int
-	Freq         map[string]int
-	Succ_history []time.Time
-	Fail_history []time.Time
-}
-
-type wordinfos struct {
-	Wordinfos map[string]wordinfo
-}
 
 func read_docs_info() {
 	c, err := ioutil.ReadFile(doci_path)
