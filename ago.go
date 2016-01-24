@@ -396,6 +396,7 @@ func do_test(args []string) {
 		}
 		fmt.Printf("\n\n\n")
 	}
+	write_words_info()
 }
 
 // main is the entry point of `ago`.
