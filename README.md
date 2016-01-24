@@ -4,15 +4,16 @@ ago
 `ago` is _a go_ program.
 The name will be changed in future, maybe.
 
-In short, the program chooses useful words in specific documents that need to be understanded well and helps user to understand them well.
-The help will be made by listing the each word and its meaning, and user self
-test about the word. The self test result will feedback the important word
-election.
+In short, the program chooses useful words in specific documents that need to
+be understanded well and helps user to understand them well.
+The help will be made by listing the each word and its meaning, and let user to
+test whether he is understanding the word well in himself. The self test result
+will feedback the important word election.
 
-This program has made for author's english vocabulary memorizing. Because the
-description of the program is general, however, the program can be used for
-wider general case. For example, terminologies for specific area such as
-computer science or mathematics.
+This program has made for author's english vocabulary memorization training.
+Because the description of the program is general, however, the program can be
+used for wider general case. For example, terminologies for specific area such
+as computer science or mathematics.
 
 
 Workflow
@@ -32,6 +33,7 @@ word to user.  User can let the program knows whether he remembered the meaning
 well or not.
 If user says he is remembering the meaning well, importance of the word becomes
 lower. In other case, the importance becomes higher.
+
 
 Usage
 =====
@@ -70,6 +72,7 @@ Commands are:
    user by using the `dic` command internally. After that, user can feedback
    `ago` whether he remembered the meaning well or not. The feedback be used to
    calculate the importance of the word.
+
 
 Usage Example
 =============
