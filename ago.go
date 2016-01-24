@@ -327,8 +327,10 @@ func daum_dict(q string) string {
 	}
 
 	html_src := string(body)
-	mean_sect := mean_section(html_src)
-	ex_sect := ex_section(html_src)
+	mean_sect := html_to_txt(mean_section(html_src))
+	ex_sect := html_to_txt(ex_section(html_src))
+	mean_sect = strings.Join(strings.Fields(mean_sect), " ")
+	ex_sect = strings.Join(strings.Fields(ex_sect), " ")
 	return fmt.Sprintf("Meaning\n%s\n\nExamples\n%s\n",
 		html_to_txt(mean_sect), html_to_txt(ex_sect))
 }
