@@ -265,7 +265,6 @@ func lswords(args []string) {
 
 // html_to_txt extracts text that browser displays from html source.
 func html_to_txt(s string) string {
-	// TODO: DRY principle...
 	for {
 		scriptopen := strings.Index(s, "<script")
 		scriptclose := strings.Index(s, "</script>")
@@ -462,13 +461,10 @@ func do_test(args []string) {
 //
 // commands are:
 // - ls-docs, add-docs, rm-docs: list, add, remove documentation[s].
-// - doc, mod-doc: Commands for future. Not be implemented yet. Display and
-// 	modify information of the doc.
 // - words: list words information
 // - test: start a test. Number of questions can be specified as option.
-//
-// The description above is lie because this program is nothing for now. It is
-// just a plan.
+// - doc, mod-doc: Commands for future. Not be implemented yet. Display and
+// 	modify information of the doc.
 func main() {
 	args := os.Args
 	if len(args) < 2 {
