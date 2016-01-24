@@ -262,7 +262,9 @@ func do_test(args []string) {
 	fmt.Printf("do test %s\n", args)
 }
 
-func text_of_html(s string) string {
+// html_to_txt extracts text that browser displays from html source.
+func html_to_txt(s string) string {
+	// TODO: DRY principle...
 	for {
 		scriptopen := strings.Index(s, "<script")
 		scriptclose := strings.Index(s, "</script>")
@@ -289,24 +291,22 @@ func text_of_html(s string) string {
 	return s
 }
 
+// pick_txt picks up a section inside a text.
+// the section should starts / ends with specific text, start and end
+func pick_section(s string, start string, end string) string {
+	sidx := strings.Index(s, start)
+	eidx := sidx + strings.Index(s[sidx:], end)
+
+	return s[sidx:eidx]
+}
+
 func mean_section(s string) string {
-	mean_start_txt := "<ul class=\"list_mean\""
-	mean_end_txt := "</ul>"
-
-	mean_start := strings.Index(s, mean_start_txt)
-	mean_end := mean_start + strings.Index(s[mean_start:], mean_end_txt)
-
-	return s[mean_start : mean_end+len(mean_end_txt)]
+	return pick_section(s, "<ul class=\"list_mean\"", "</ul>")
 }
 
 func ex_section(s string) string {
-	ex_start_txt := "<div class=\"list_exam\">"
-	ex_end_txt := "<div class=\"result_sch\">"
-
-	ex_start := strings.Index(s, ex_start_txt)
-	ex_end := ex_start + strings.Index(s[ex_start:], ex_end_txt)
-
-	return s[ex_start : ex_end+len(ex_end_txt)]
+	return pick_section(s, "<div class=\"list_exam\">",
+		"<div class=\"result_sch\">")
 }
 
 func daum_dict(q string) string {
@@ -330,7 +330,7 @@ func daum_dict(q string) string {
 	mean_sect := mean_section(html_src)
 	ex_sect := ex_section(html_src)
 	return fmt.Sprintf("Meaning\n%s\n\nExamples\n%s\n",
-		text_of_html(mean_sect), text_of_html(ex_sect))
+		html_to_txt(mean_sect), html_to_txt(ex_sect))
 }
 
 func dic(args []string) {
