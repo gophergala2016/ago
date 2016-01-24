@@ -162,6 +162,14 @@ func rmdoc(target int) error {
 		if doc.Id != target {
 			continue
 		}
+		docdir := fmt.Sprintf("%s%d", DOCDIR_PREF, doc.Id)
+		docdirpath := path.Join(docs_dir, docdir)
+		if err := os.RemoveAll(docdirpath); err != nil {
+			msg := fmt.Sprintf("failed to remove dir: %s", err)
+			err = errors.New(msg)
+			return err
+		}
+
 		docs_info.Docs = append(docs_info.Docs[:idx],
 			docs_info.Docs[idx+1:]...)
 		return nil
