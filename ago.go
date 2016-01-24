@@ -17,6 +17,8 @@ import (
 	"path/filepath"
 	"runtime"
 	"strconv"
+	"strings"
+	"time"
 )
 
 const (
@@ -40,6 +42,7 @@ var (
 	doci_path   string // documents information file path
 	wordi_path  string // words information file path
 	docs_info   documents_info
+	winfos      wordinfos
 )
 
 // document contains informations for a document.
@@ -51,6 +54,18 @@ type document struct {
 type documents_info struct {
 	Docs    []document
 	Next_id int
+}
+
+type wordinfo struct {
+	Word         string
+	Totalfreq    int
+	Freq         map[string]int
+	Succ_history []time.Time
+	Fail_history []time.Time
+}
+
+type wordinfos struct {
+	Wordinfos map[string]wordinfo
 }
 
 func read_docs_info() {
@@ -79,6 +94,32 @@ func write_docs_info() {
 	}
 }
 
+func read_words_info() {
+	c, err := ioutil.ReadFile(wordi_path)
+	if err != nil {
+		errl.Printf("failed to read words info file: %s\n", err)
+		os.Exit(1)
+	}
+
+	if err := json.Unmarshal(c, &winfos); err != nil {
+		errl.Printf("error while unmarshal words info: %s\n", err)
+		dbgl.Printf("the json: %s\n", c)
+		os.Exit(1)
+	}
+}
+
+func write_words_info() {
+	bytes, err := json.Marshal(winfos)
+	if err != nil {
+		errl.Printf("failed to marshal words_info: %s\n", err)
+		os.Exit(1)
+	}
+
+	if err := ioutil.WriteFile(wordi_path, bytes, 0600); err != nil {
+		errl.Printf("failed to write marshaled words_info: %s\n", err)
+	}
+}
+
 func lsdocs(args []string) {
 	for _, doc := range docs_info.Docs {
 		fmt.Printf("%d: %s\n", doc.Id, doc.Name)
@@ -95,9 +136,24 @@ func file_exists(path string) bool {
 	return false
 }
 
-func analyze_words(bytes []byte) {
-	// TODO: analyze words in the document and save the information
-	fmt.Printf("analyze...\n%s\n", bytes)
+func analyze_words(bytes []byte, docid int) {
+	freq_map := make(map[string]int)
+	s := string(bytes)
+	words := strings.Fields(s)
+	for _, word := range words {
+		freq, _ := freq_map[word]
+		freq_map[word] = freq + 1
+	}
+	for word, freq := range freq_map {
+		winfo, exists := winfos.Wordinfos[word]
+		if !exists {
+			winfo = wordinfo{Word: word}
+			winfo.Freq = make(map[string]int)
+			winfos.Wordinfos[word] = winfo
+		}
+		winfo.Totalfreq += freq
+		winfo.Freq[strconv.Itoa(docid)] = freq
+	}
 }
 
 func adddoc(file_path string) error {
@@ -114,11 +170,12 @@ func adddoc(file_path string) error {
 		return err
 	}
 
+	docid := docs_info.Next_id
+
 	// analyze words in the file content
-	analyze_words(bytes)
+	analyze_words(bytes, docid)
 
 	// create dir under docs/
-	docid := docs_info.Next_id
 	docdir := fmt.Sprintf("%s%d", DOCDIR_PREF, docid)
 	docdirpath := path.Join(docs_dir, docdir)
 	if err = os.MkdirAll(docdirpath, 0700); err != nil {
@@ -152,6 +209,7 @@ func adddocs(args []string) {
 		}
 	}
 	write_docs_info()
+	write_words_info()
 }
 
 // rmdoc remove a document with specific id.
@@ -261,6 +319,8 @@ func main() {
 //
 // [1] https://www.mendeley.com/
 func init() {
+	winfos.Wordinfos = make(map[string]wordinfo)
+
 	if runtime.GOOS == ANDRD {
 		metadat_dir = ANDRD_TMPDIR
 	}
@@ -276,6 +336,7 @@ func init() {
 
 	if file_exists(docs_dir) {
 		read_docs_info()
+		read_words_info()
 		return
 	}
 
@@ -302,5 +363,7 @@ func init() {
 
 	docs_info.Next_id = 0
 	write_docs_info()
+	write_words_info()
 	read_docs_info()
+	read_words_info()
 }
