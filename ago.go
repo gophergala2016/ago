@@ -358,7 +358,7 @@ func daum_dict(q string) string {
 
 func dic(args []string) {
 	fmt.Printf("%s\n", daum_dict(args[0]))
-	add_word(args[0], 1000, DOCID_DICT)
+	add_word(args[0], 500, DOCID_DICT)
 	write_words_info()
 }
 
@@ -381,8 +381,8 @@ func (a by_import) Less(i, j int) bool {
 	bf := len(big.Fail_history)
 	bs := len(big.Succ_history)
 
-	l_imp := ltl.Totalfreq + 10*(lf-ls)
-	b_imp := big.Totalfreq + 10*(bf-bs)
+	l_imp := ltl.Totalfreq + 100*(lf-ls)
+	b_imp := big.Totalfreq + 100*(bf-bs)
 
 	// We need descendent order
 	return l_imp > b_imp
