@@ -414,6 +414,9 @@ func get_questions(args []string) []wordinfo {
 
 	// Sort and use high score ones
 	sort.Sort(ordered_wis(pool))
+	if len(pool) < nr_ques {
+		return pool
+	}
 	return pool[:nr_ques]
 }
 
