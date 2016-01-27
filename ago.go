@@ -57,6 +57,8 @@ const (
 	DOCINFO      = "info"
 	WORDINFO     = "words"
 	DOCDIR_PREF  = "doc" // prefix of document directory
+	DOCID_DICT   = 0     // document id for dictionary
+	NR_RSVD_DOCS = 1
 )
 
 var (
@@ -138,6 +140,18 @@ func file_exists(path string) bool {
 	return false
 }
 
+func add_word(word string, freq, docid int) {
+	winfo, exists := winfos.Wordinfos[word]
+	if !exists {
+		winfo = wordinfo{Word: word}
+		winfo.Freq = make(map[string]int)
+		winfo.Totalfreq = 0
+	}
+	winfo.Totalfreq += freq
+	winfo.Freq[strconv.Itoa(docid)] += freq
+	winfos.Wordinfos[word] = winfo
+}
+
 func analyze_words(bytes []byte, docid int) {
 	freq_map := make(map[string]int)
 	s := string(bytes)
@@ -151,14 +165,7 @@ func analyze_words(bytes []byte, docid int) {
 		freq_map[word] = freq + 1
 	}
 	for word, freq := range freq_map {
-		winfo, exists := winfos.Wordinfos[word]
-		if !exists {
-			winfo = wordinfo{Word: word}
-			winfo.Freq = make(map[string]int)
-		}
-		winfo.Totalfreq += freq
-		winfo.Freq[strconv.Itoa(docid)] = freq
-		winfos.Wordinfos[word] = winfo
+		add_word(word, freq, docid)
 	}
 }
 
@@ -351,6 +358,8 @@ func daum_dict(q string) string {
 
 func dic(args []string) {
 	fmt.Printf("%s\n", daum_dict(args[0]))
+	add_word(args[0], 1000, DOCID_DICT)
+	write_words_info()
 }
 
 type by_import []wordinfo
@@ -565,7 +574,7 @@ func init() {
 		}
 	}
 
-	docs_info.Next_id = 0
+	docs_info.Next_id = NR_RSVD_DOCS
 	write_docs_info()
 	write_words_info()
 	read_docs_info()
