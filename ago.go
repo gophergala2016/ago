@@ -362,17 +362,17 @@ func dic(args []string) {
 	write_words_info()
 }
 
-type by_import []wordinfo
+type ordered_wis []wordinfo
 
-func (a by_import) Len() int {
+func (a ordered_wis) Len() int {
 	return len(a)
 }
 
-func (a by_import) Swap(i, j int) {
+func (a ordered_wis) Swap(i, j int) {
 	a[i], a[j] = a[j], a[i]
 }
 
-func (a by_import) Less(i, j int) bool {
+func (a ordered_wis) Less(i, j int) bool {
 	ltl := a[i]
 	big := a[j]
 
@@ -413,7 +413,7 @@ func get_questions(args []string) []wordinfo {
 	}
 
 	// Sort and use high score ones
-	sort.Sort(by_import(pool))
+	sort.Sort(ordered_wis(pool))
 	return pool[:nr_ques]
 }
 
