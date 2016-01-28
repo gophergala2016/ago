@@ -264,7 +264,13 @@ func rmdocs(args []string) {
 }
 
 func lswords(args []string) {
+	var slices []wordinfo
 	for _, info := range winfos.Wordinfos {
+		slices = append(slices, info)
+	}
+
+	sort.Sort(ordered_wis(slices))
+	for _, info := range slices {
 		fmt.Printf("word %s:\t total freq %d\n", info.Word,
 			info.Totalfreq)
 	}
