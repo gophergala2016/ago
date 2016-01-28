@@ -390,8 +390,17 @@ func daum_dict(q string) string {
 }
 
 func dic(args []string) {
+	word := args[0]
+
 	fmt.Printf("%s\n", daum_dict(args[0]))
-	add_word(args[0], 500, DOCID_DICT)
+
+	winfo, exists := winfos.Wordinfos[word]
+	if !exists {
+		add_word(word, 500, DOCID_DICT)
+		winfo, _ = winfos.Wordinfos[word]
+	}
+	winfo.Fail_history = append(winfo.Fail_history, time.Now())
+	winfos.Wordinfos[winfo.Word] = winfo
 	write_words_info()
 }
 
