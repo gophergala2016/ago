@@ -263,6 +263,32 @@ func rmdocs(args []string) {
 	write_docs_info()
 }
 
+type ordered_wis []wordinfo
+
+func (a ordered_wis) Len() int {
+	return len(a)
+}
+
+func (a ordered_wis) Swap(i, j int) {
+	a[i], a[j] = a[j], a[i]
+}
+
+func (a ordered_wis) Less(i, j int) bool {
+	ltl := a[i]
+	big := a[j]
+
+	lf := len(ltl.Fail_history)
+	ls := len(ltl.Succ_history)
+	bf := len(big.Fail_history)
+	bs := len(big.Succ_history)
+
+	l_imp := ltl.Totalfreq + 100*(lf-ls)
+	b_imp := big.Totalfreq + 100*(bf-bs)
+
+	// We need descendent order
+	return l_imp > b_imp
+}
+
 func lswords(args []string) {
 	var slices []wordinfo
 	for _, info := range winfos.Wordinfos {
@@ -366,32 +392,6 @@ func dic(args []string) {
 	fmt.Printf("%s\n", daum_dict(args[0]))
 	add_word(args[0], 500, DOCID_DICT)
 	write_words_info()
-}
-
-type ordered_wis []wordinfo
-
-func (a ordered_wis) Len() int {
-	return len(a)
-}
-
-func (a ordered_wis) Swap(i, j int) {
-	a[i], a[j] = a[j], a[i]
-}
-
-func (a ordered_wis) Less(i, j int) bool {
-	ltl := a[i]
-	big := a[j]
-
-	lf := len(ltl.Fail_history)
-	ls := len(ltl.Succ_history)
-	bf := len(big.Fail_history)
-	bs := len(big.Succ_history)
-
-	l_imp := ltl.Totalfreq + 100*(lf-ls)
-	b_imp := big.Totalfreq + 100*(bf-bs)
-
-	// We need descendent order
-	return l_imp > b_imp
 }
 
 func get_questions(args []string) []wordinfo {
