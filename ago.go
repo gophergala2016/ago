@@ -297,8 +297,9 @@ func lswords(args []string) {
 
 	sort.Sort(ordered_wis(slices))
 	for _, info := range slices {
-		fmt.Printf("word %s:\t total freq %d\n", info.Word,
-			info.Totalfreq)
+		fmt.Printf("word %s:\t total freq %d, succ %d, fail %d\n",
+			info.Word, info.Totalfreq,
+			len(info.Succ_history), len(info.Fail_history))
 	}
 }
 
