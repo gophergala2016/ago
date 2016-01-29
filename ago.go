@@ -158,8 +158,12 @@ func analyze_words(bytes []byte, docid int) {
 	words := strings.Fields(s)
 	for _, word := range words {
 		word = strings.ToLower(word)
-		for _, suf := range []string{",", ".", "!", "?"} {
-			word = strings.TrimSuffix(word, suf)
+		for _, special := range []string{",", ".", "!", "?",
+			"`", "'", "\"", ":", "(", ")"} {
+			word = strings.Join(strings.Split(word, special), "")
+		}
+		if word == "" {
+			continue
 		}
 		freq, _ := freq_map[word]
 		freq_map[word] = freq + 1
