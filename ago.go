@@ -50,7 +50,16 @@ const (
 	CMD          = "ago"
 	USAGE        = "USAGE: " + CMD + " <commands> [argument ...]\n"
 	NOARG_ERRMSG = USAGE + "\nFor detail, try " + CMD + " help\n"
-	HELP_MSG     = "Use the source ;)\n"
+	COMMANDS_MSG = `
+commands are:
+ - ls-docs, add-docs, rm-docs: list, add, remove documentation[s].
+ - words: list words information
+ - test: start a test. Number of questions can be specified as option.
+ - doc, mod-doc: Commands for future. Not be implemented yet. Display and
+                 modify information of the doc.
+
+`
+	HELP_MSG     = USAGE + COMMANDS_MSG
 	ANDRD        = "android"
 	ANDRD_TMPDIR = "/data/local/tmp"
 	DOCSDIR      = "docs"
