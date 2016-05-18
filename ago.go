@@ -353,7 +353,7 @@ func pick_section(s string, start string, end string) string {
 	if sidx == -1 {
 		return ""
 	}
-	eidx := sidx + strings.Index(s[sidx:], end)
+	eidx := sidx + strings.Index(s[sidx+1:], end)
 	if eidx == -1 {
 		return ""
 	}
@@ -361,13 +361,31 @@ func pick_section(s string, start string, end string) string {
 	return s[sidx:eidx]
 }
 
+func nth_index(s, sep string, n int) int {
+	found := 0
+	ret := 0
+	for found < n {
+		if ret != 0 {
+			ret += 1
+		}
+		ret += strings.Index(s[ret:], sep)
+		if ret == -1 {
+			return -1
+		}
+		found++
+	}
+	return ret
+}
+
+const DAUM_WORD = "<div class=\"card_word\""
+
 func mean_section(s string) string {
-	return pick_section(s, "<ul class=\"list_mean\"", "</ul>")
+	return pick_section(s, DAUM_WORD, DAUM_WORD)
 }
 
 func ex_section(s string) string {
-	return pick_section(s, "<div class=\"list_exam\">",
-		"<div class=\"result_sch\">")
+	the_index := nth_index(s, DAUM_WORD, 3)
+	return pick_section(s[the_index:], DAUM_WORD, DAUM_WORD)
 }
 
 func daum_dict(q string) string {
