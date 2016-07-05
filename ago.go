@@ -7,7 +7,9 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
+	"encoding/xml"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -21,6 +23,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode/utf8"
 )
 
 // document contains informations for a document.
@@ -388,6 +391,48 @@ func ex_section(s string) string {
 	return pick_section(s[the_index:], DAUM_WORD, DAUM_WORD)
 }
 
+func excludeStrRegion(s, start, end string) string {
+	sidx := strings.Index(s, start)
+	if sidx == -1 {
+		return ""
+	}
+	eidx := strings.Index(s, end)
+	return s[:sidx] + s[eidx+utf8.RuneCountInString(end):]
+}
+
+type Node struct {
+	XMLName xml.Name
+	Content []byte `xml:",innerxml"`
+	Class   []byte `xml:"class,attr"`
+	Nodes   []Node `xml:",any"`
+}
+
+func get_node_with(nodes []Node, name, class string) *Node {
+	for _, n := range nodes {
+		if n.XMLName.Local == name && string(n.Class) == class {
+			return &n
+		}
+		ret := get_node_with(n.Nodes, name, class)
+		if ret != nil {
+			return ret
+		}
+	}
+
+	return nil
+}
+
+func print_leaf(nodes []Node) {
+	for _, n := range nodes {
+		if len(n.Nodes) == 0 {
+			fmt.Printf(strings.TrimSpace(string(n.Content)) + " ")
+		}
+		if n.XMLName.Local == "span" && string(n.Class) == "txt_ex" {
+			fmt.Printf("\n\n")
+		}
+		print_leaf(n.Nodes)
+	}
+}
+
 func daum_dict(q string) string {
 	daumdic_url := "http://dic.daum.net/search.do?q="
 	suffix := "&dic=eng&search_first=Y"
@@ -406,6 +451,72 @@ func daum_dict(q string) string {
 	}
 
 	html_src := string(body)
+	for {
+		e := excludeStrRegion(html_src, "<script", "</script>")
+		if e == "" {
+			break
+		}
+		html_src = e
+	}
+
+	dec := xml.NewDecoder(bytes.NewBuffer([]byte(html_src)))
+	dec.Strict = false
+	dec.AutoClose = xml.HTMLAutoClose
+	dec.Entity = xml.HTMLEntity
+
+	var n Node
+	err = dec.Decode(&n)
+	if err != nil {
+		fmt.Printf("decode fail")
+		os.Exit(1)
+	}
+
+	node := get_node_with([]Node{n}, "div", "card_relate")
+	if node == nil {
+		fmt.Printf("No division found\n")
+		os.Exit(1)
+	}
+	fmt.Printf("# Related Words\n")
+	print_leaf([]Node{*node})
+	fmt.Printf("\n\n")
+
+	node = get_node_with([]Node{n}, "div", "card_word #word #word")
+	if node == nil {
+		fmt.Printf("No division found\n")
+		os.Exit(1)
+	}
+	fmt.Printf("# Word\n")
+	print_leaf([]Node{*node})
+	fmt.Printf("\n\n")
+
+	node = get_node_with([]Node{n}, "div", "card_word #word #mean")
+	if node == nil {
+		fmt.Printf("No division found\n")
+		os.Exit(1)
+	}
+	fmt.Printf("# Meaning\n")
+	print_leaf([]Node{*node})
+	fmt.Printf("\n\n")
+
+	node = get_node_with([]Node{n}, "div", "card_word")
+	if node == nil {
+		fmt.Printf("No division found\n")
+		os.Exit(1)
+	}
+	fmt.Printf("# Examples\n")
+	print_leaf([]Node{*node})
+	fmt.Printf("\n")
+	/*
+	node := get_node_with([]Node{n}, "div", "search_cont")
+	if node == nil {
+		fmt.Printf("No division found\n")
+		os.Exit(1)
+	}
+	print_leaf([]Node{*node})
+	fmt.Printf("\n")
+	os.Exit(1)
+	*/
+
 	mean_sect := html_to_txt(mean_section(html_src))
 	ex_sect := html_to_txt(ex_section(html_src))
 	mean_sect = strings.Join(strings.Fields(mean_sect), " ")
