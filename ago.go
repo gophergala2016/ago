@@ -496,17 +496,6 @@ func daum_dict(q string) string {
 	print_leaf([]Node{*ex_node})
 	fmt.Printf("\n")
 
-	/*
-		node := get_node_with([]Node{n}, "div", "search_cont")
-		if node == nil {
-			fmt.Printf("No division found\n")
-			os.Exit(1)
-		}
-		print_leaf([]Node{*node})
-		fmt.Printf("\n")
-		os.Exit(1)
-	*/
-
 	mean_sect := html_to_txt(mean_section(html_src))
 	ex_sect := html_to_txt(ex_section(html_src))
 	mean_sect = strings.Join(strings.Fields(mean_sect), " ")
