@@ -497,22 +497,22 @@ func daum_dict(q string) string {
 		leaf_string(*ex_node))
 
 	/*
-	 * XML parsing based current code is not complete yet.  It ignores
-	 * nodes like `<a src="abc">abc`.  For possible later use, leave olde
-	 * code here as comment for now.
+		 * XML parsing based current code is not complete yet.  It ignores
+		 * nodes like `<a src="abc">abc`.  For possible later use, leave olde
+		 * code here as comment for now.
 
-	mean_sect := html_to_txt(mean_section(html_src))
-	ex_sect := html_to_txt(ex_section(html_src))
-	mean_sect = strings.Join(strings.Fields(mean_sect), " ")
-	ex_sect_fields := strings.Fields(ex_sect)
-	for idx, f := range ex_sect_fields {
-		if strings.HasSuffix(f, ".") && len(f) > 2 {
-			ex_sect_fields[idx] = f + "\n"
+		mean_sect := html_to_txt(mean_section(html_src))
+		ex_sect := html_to_txt(ex_section(html_src))
+		mean_sect = strings.Join(strings.Fields(mean_sect), " ")
+		ex_sect_fields := strings.Fields(ex_sect)
+		for idx, f := range ex_sect_fields {
+			if strings.HasSuffix(f, ".") && len(f) > 2 {
+				ex_sect_fields[idx] = f + "\n"
+			}
 		}
-	}
-	ex_sect = strings.Join(ex_sect_fields, " ")
-	return fmt.Sprintf("Meaning\n%s\n\nExamples\n%s\n",
-		html_to_txt(mean_sect), html_to_txt(ex_sect))
+		ex_sect = strings.Join(ex_sect_fields, " ")
+		return fmt.Sprintf("Meaning\n%s\n\nExamples\n%s\n",
+			html_to_txt(mean_sect), html_to_txt(ex_sect))
 	*/
 }
 
