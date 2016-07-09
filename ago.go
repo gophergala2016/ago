@@ -421,16 +421,22 @@ func get_node_with(nodes []Node, name, class string) *Node {
 	return nil
 }
 
-func print_leaf(nodes []Node) {
+func spr_leaf_string(nodes []Node, buf *string) {
 	for _, n := range nodes {
 		if len(n.Nodes) == 0 {
-			fmt.Printf(strings.TrimSpace(string(n.Content)) + " ")
+			*buf += strings.TrimSpace(string(n.Content)) + " "
 		}
 		if n.XMLName.Local == "span" && string(n.Class) == "txt_ex" {
-			fmt.Printf("\n\n")
+			*buf += "\n\n"
 		}
-		print_leaf(n.Nodes)
+		spr_leaf_string(n.Nodes, buf)
 	}
+}
+
+func leaf_string(node Node) string {
+	buf := ""
+	spr_leaf_string([]Node{node}, &buf)
+	return buf
 }
 
 func daum_dict(q string) string {
@@ -480,21 +486,20 @@ func daum_dict(q string) string {
 		fmt.Printf("No division found\n")
 		os.Exit(1)
 	}
-	fmt.Printf("# Related Words\n")
-	print_leaf([]Node{*relate_node})
-	fmt.Printf("\n\n")
 
-	fmt.Printf("# Word\n")
-	print_leaf([]Node{*word_node})
-	fmt.Printf("\n\n")
-
-	fmt.Printf("# Meaning\n")
-	print_leaf([]Node{*mean_node})
-	fmt.Printf("\n\n")
-
-	fmt.Printf("# Examples\n")
-	print_leaf([]Node{*ex_node})
-	fmt.Printf("\n")
+	result := fmt.Sprintf("# Releated Words\n"+
+		"%s\n\n"+
+		"# Word\n"+
+		"%s \n\n"+
+		"# Meaning\n"+
+		"%s \n\n"+
+		"# Examples\n"+
+		"%s\n",
+		leaf_string(*relate_node),
+		leaf_string(*word_node),
+		leaf_string(*mean_node),
+		leaf_string(*ex_node))
+	fmt.Printf(result)
 
 	mean_sect := html_to_txt(mean_section(html_src))
 	ex_sect := html_to_txt(ex_section(html_src))
