@@ -445,15 +445,13 @@ func daum_dict(q string) string {
 	url := fmt.Sprintf("%s%s%s", daumdic_url, q, suffix)
 	resp, err := http.Get(url)
 	if err != nil {
-		errl.Printf("error while get %s: %s", url, err)
-		os.Exit(1)
+		panic(fmt.Sprintf("error while get %s: %s", url, err))
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	resp.Body.Close()
 	if err != nil {
-		errl.Printf("failed to read body: %s", err)
-		os.Exit(1)
+		panic(fmt.Sprintf("failed to read body: %s", err))
 	}
 
 	html_src := string(body)
@@ -473,8 +471,7 @@ func daum_dict(q string) string {
 	var n Node
 	err = dec.Decode(&n)
 	if err != nil {
-		fmt.Printf("decode fail")
-		os.Exit(1)
+		panic("decode fail")
 	}
 
 	relate_node := get_node_with([]Node{n}, "div", "card_relate")
@@ -483,8 +480,7 @@ func daum_dict(q string) string {
 	ex_node := get_node_with([]Node{n}, "div", "card_word")
 	if relate_node == nil || word_node == nil || mean_node == nil ||
 		ex_node == nil {
-		fmt.Printf("No division found\n")
-		os.Exit(1)
+		panic("No division found\n")
 	}
 
 	return fmt.Sprintf("# Releated Words\n"+
