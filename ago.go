@@ -499,8 +499,9 @@ func daum_dict(q string) string {
 		leaf_string(*word_node),
 		leaf_string(*mean_node),
 		leaf_string(*ex_node))
-	fmt.Printf(result)
+	return result
 
+	/*
 	mean_sect := html_to_txt(mean_section(html_src))
 	ex_sect := html_to_txt(ex_section(html_src))
 	mean_sect = strings.Join(strings.Fields(mean_sect), " ")
@@ -513,6 +514,7 @@ func daum_dict(q string) string {
 	ex_sect = strings.Join(ex_sect_fields, " ")
 	return fmt.Sprintf("Meaning\n%s\n\nExamples\n%s\n",
 		html_to_txt(mean_sect), html_to_txt(ex_sect))
+	*/
 }
 
 func dic(args []string) {
