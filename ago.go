@@ -487,7 +487,7 @@ func daum_dict(q string) string {
 		os.Exit(1)
 	}
 
-	result := fmt.Sprintf("# Releated Words\n"+
+	return fmt.Sprintf("# Releated Words\n"+
 		"%s\n\n"+
 		"# Word\n"+
 		"%s \n\n"+
@@ -499,9 +499,12 @@ func daum_dict(q string) string {
 		leaf_string(*word_node),
 		leaf_string(*mean_node),
 		leaf_string(*ex_node))
-	return result
 
 	/*
+	 * XML parsing based current code is not complete yet.  It ignores
+	 * nodes like `<a src="abc">abc`.  For possible later use, leave olde
+	 * code here as comment for now.
+
 	mean_sect := html_to_txt(mean_section(html_src))
 	ex_sect := html_to_txt(ex_section(html_src))
 	mean_sect = strings.Join(strings.Fields(mean_sect), " ")
