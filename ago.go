@@ -471,50 +471,40 @@ func daum_dict(q string) string {
 		os.Exit(1)
 	}
 
-	node := get_node_with([]Node{n}, "div", "card_relate")
-	if node == nil {
+	relate_node := get_node_with([]Node{n}, "div", "card_relate")
+	word_node := get_node_with([]Node{n}, "div", "card_word #word #word")
+	mean_node := get_node_with([]Node{n}, "div", "card_word #word #mean")
+	ex_node := get_node_with([]Node{n}, "div", "card_word")
+	if relate_node == nil || word_node == nil || mean_node == nil ||
+		ex_node == nil {
 		fmt.Printf("No division found\n")
 		os.Exit(1)
 	}
 	fmt.Printf("# Related Words\n")
-	print_leaf([]Node{*node})
+	print_leaf([]Node{*relate_node})
 	fmt.Printf("\n\n")
 
-	node = get_node_with([]Node{n}, "div", "card_word #word #word")
-	if node == nil {
-		fmt.Printf("No division found\n")
-		os.Exit(1)
-	}
 	fmt.Printf("# Word\n")
-	print_leaf([]Node{*node})
+	print_leaf([]Node{*word_node})
 	fmt.Printf("\n\n")
 
-	node = get_node_with([]Node{n}, "div", "card_word #word #mean")
-	if node == nil {
-		fmt.Printf("No division found\n")
-		os.Exit(1)
-	}
 	fmt.Printf("# Meaning\n")
-	print_leaf([]Node{*node})
+	print_leaf([]Node{*mean_node})
 	fmt.Printf("\n\n")
 
-	node = get_node_with([]Node{n}, "div", "card_word")
-	if node == nil {
-		fmt.Printf("No division found\n")
-		os.Exit(1)
-	}
 	fmt.Printf("# Examples\n")
-	print_leaf([]Node{*node})
+	print_leaf([]Node{*ex_node})
 	fmt.Printf("\n")
+
 	/*
-	node := get_node_with([]Node{n}, "div", "search_cont")
-	if node == nil {
-		fmt.Printf("No division found\n")
+		node := get_node_with([]Node{n}, "div", "search_cont")
+		if node == nil {
+			fmt.Printf("No division found\n")
+			os.Exit(1)
+		}
+		print_leaf([]Node{*node})
+		fmt.Printf("\n")
 		os.Exit(1)
-	}
-	print_leaf([]Node{*node})
-	fmt.Printf("\n")
-	os.Exit(1)
 	*/
 
 	mean_sect := html_to_txt(mean_section(html_src))
