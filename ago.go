@@ -427,7 +427,7 @@ func spr_leaf_string(nodes []Node, buf *string) {
 			*buf += strings.TrimSpace(string(n.Content)) + " "
 		}
 		if n.XMLName.Local == "span" && string(n.Class) == "txt_ex" {
-			*buf += "\n\n"
+			*buf += "\n"
 		}
 		spr_leaf_string(n.Nodes, buf)
 	}
