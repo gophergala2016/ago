@@ -478,22 +478,27 @@ func daum_dict(q string) string {
 
 	relate_node := get_node_with([]Node{n}, "div", "card_relate")
 	if relate_node != nil {
-		ret += "# Related Words\n" + leaf_string(*relate_node) + "\n\n"
+		ret += "Related Words\n"
+		ret += "=============\n\n" +
+			leaf_string(*relate_node) + "\n\n\n"
 	}
 
 	word_node := get_node_with([]Node{n}, "div", "card_word #word #word")
 	if word_node != nil {
-		ret += "# Word\n" + leaf_string(*word_node) + "\n\n"
+		ret += "Word\n"
+		ret += "====\n\n" + leaf_string(*word_node) + "\n\n\n"
 	}
 
 	mean_node := get_node_with([]Node{n}, "div", "card_word #word #mean")
 	if mean_node != nil {
-		ret += "# Meaning\n" + leaf_string(*mean_node) + "\n\n"
+		ret += "Meaning\n"
+		ret += "=======\n\n" + leaf_string(*mean_node) + "\n\n\n"
 	}
 
 	ex_node := get_node_with([]Node{n}, "div", "card_word")
 	if ex_node != nil {
-		ret += "# Examples\n" + leaf_string(*ex_node) + "\n\n"
+		ret += "Examples\n"
+		ret += "========\n\n" + leaf_string(*ex_node) + "\n\n"
 	}
 
 	return ret
