@@ -474,27 +474,29 @@ func daum_dict(q string) string {
 		panic("decode fail")
 	}
 
+	ret := ""
+
 	relate_node := get_node_with([]Node{n}, "div", "card_relate")
-	word_node := get_node_with([]Node{n}, "div", "card_word #word #word")
-	mean_node := get_node_with([]Node{n}, "div", "card_word #word #mean")
-	ex_node := get_node_with([]Node{n}, "div", "card_word")
-	if relate_node == nil || word_node == nil || mean_node == nil ||
-		ex_node == nil {
-		panic("No division found\n")
+	if relate_node != nil {
+		ret += "# Related Words\n" + leaf_string(*relate_node) + "\n\n"
 	}
 
-	return fmt.Sprintf("# Releated Words\n"+
-		"%s\n\n"+
-		"# Word\n"+
-		"%s \n\n"+
-		"# Meaning\n"+
-		"%s \n\n"+
-		"# Examples\n"+
-		"%s\n",
-		leaf_string(*relate_node),
-		leaf_string(*word_node),
-		leaf_string(*mean_node),
-		leaf_string(*ex_node))
+	word_node := get_node_with([]Node{n}, "div", "card_word #word #word")
+	if word_node != nil {
+		ret += "# Word\n" + leaf_string(*word_node) + "\n\n"
+	}
+
+	mean_node := get_node_with([]Node{n}, "div", "card_word #word #mean")
+	if mean_node != nil {
+		ret += "# Meaning\n" + leaf_string(*mean_node) + "\n\n"
+	}
+
+	ex_node := get_node_with([]Node{n}, "div", "card_word")
+	if ex_node != nil {
+		ret += "# Examples\n" + leaf_string(*ex_node) + "\n\n"
+	}
+
+	return ret
 
 	/*
 		 XML parsing based current code is not complete yet.  It
